@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="app-main">
+<dom-module id="pwa-app">
   <template>
     <style>
       :host {
@@ -12,12 +12,12 @@
 
   <script>
     class MyApplication extends Polymer.Element {
-      static get is() { return 'app-main'; }
+      static get is() { return 'pwa-app'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'app-main'
+            value: 'pwa-app'
           }
         };
       }
