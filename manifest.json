@@ -1,0 +1,6 @@
+{
+  "name": "polymer-pwa-guide-app",
+  "short_name": "polymer-pwa",
+  "start_url": "/",
+  "display": "standalone"
+}
