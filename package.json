@@ -4,5 +4,6 @@
   "author": "ragingwind",
   "license": "MIT",
   "scripts": {
+    "start": "polymer serve -o -p 5050"
   }
 }
