@@ -18,20 +18,33 @@
       app-header {
         color: #fff;
         background-color: var(--app-primary-color); 
+        z-index: 1;
+      }
+
+      app-drawer {
+        z-index: 3;
       }
 
       iron-pages {
         width: 100%;
         text-align: center;
+        z-index: 2;
       }
     </style>
+    
+    <!-- drawer -->
+    <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
+      <app-toolbar>Greeting</app-toolbar>
+    </app-drawer>
 
+    <!-- header -->
     <app-header role="navigation" id="header" effects="waterfall" condenses>
       <app-toolbar>
-        <paper-icon-button icon="menu" aria-label="Menu"></paper-icon-button>
+        <paper-icon-button icon="menu" on-click="_toggleDrawer" aria-label="Menu"></paper-icon-button>
       </app-toolbar>
     </app-header>
 
+    <!-- contents -->
     <iron-pages selected="0">
       <h1>Hello</h1>
     </iron-pages>
@@ -41,6 +54,10 @@
     class PWApplication extends Polymer.Element {
       static get is() {
         return 'pwa-app'
+      }
+
+      _toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
       }
     }
 
