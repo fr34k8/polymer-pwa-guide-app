@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<dom-module id="pwa-greeting">
+  <template>
+    <style is="custom-style">
+      :host {
+        display: block;
+        text-align: left;
+        margin: 10px;
+      }
+
+      .card-contents {
+        margin: 10px;
+        padding-bottom: 10px;
+        font-size: 14px;
+      }
+    </style>
+
+    <paper-card>
+      <div class="card-contents">
+        <h1>Hello! World</h1>
+        <div>
+          You will have a work:
+          <ul>
+            <li>Web Manifest for installing</li>
+            <li>Service Worker for caching and offline</li>
+            <li>Application Shell powered by material-ui</li>
+            <li>PRPL pattern by code splitting</li>
+            <li>Opt in ES2015</li>
+          </ul>
+        </div>
+      </div>
+  </template>
+
+  <script>
+    class PWAGreeting extends Polymer.Element {
+      static get is() {
+        return 'pwa-greeting'
+      }
+    }
+
+    window.customElements.define(PWAGreeting.is, PWAGreeting);
+  </script>
+</dom-module>
