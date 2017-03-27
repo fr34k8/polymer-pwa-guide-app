@@ -1,12 +1,14 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="./pwa-greeting.html">
 
 <dom-module id="pwa-app">
   <template>
@@ -31,11 +33,42 @@
       app-drawer {
         z-index: 3;
       }
+
+      app-toolbar > a {
+        width: 100%;
+        text-decoration: none;
+      }
+      
+      a paper-button,
+      a:hover paper-button,
+      a:link paper-button,
+      a:active paper-button,
+      a:visited paper-button {
+        width: 100%;
+        color: #000;
+        text-transform: none;
+        justify-content: var(--layout-start-justified);
+      }
+
+      paper-button > iron-icon {
+        margin-right: 18px;
+      }
     </style>
     
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}">
+    </app-route>
+
     <!-- drawer -->
-    <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
-      <app-toolbar>Greeting</app-toolbar>
+    <app-drawer id="drawer" opened="{{drawerOpened}}" swipe-open tabindex="0">
+      <app-toolbar>
+        <a name="greeting" href="/greeting">
+          <paper-button><iron-icon icon="check"></iron-icon>Greeting</paper-button>
+        </a>
+      </app-toolbar>
     </app-drawer>
 
     <!-- header -->
@@ -57,8 +90,27 @@
         return 'pwa-app'
       }
 
+      static get observers() {
+        return [
+          '_pageChanged(routeData.page)'
+        ];
+      }
+
       _toggleDrawer() {
         this.drawerOpened = !this.drawerOpened;
+      }
+
+      _pageChanged(page) {
+        if (page === undefined) {
+          return;
+        }
+
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+        
+        const pageURL = this.resolveUrl(`pwa-${page || 'greeting'}.html`);
+        Polymer.importHref(pageURL, null, null, true);
       }
     }
 
