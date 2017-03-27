@@ -1,0 +1,23 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="pwa-users">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <div>content</div>
+  </template>
+
+  <script>
+    class PWAUsers extends Polymer.Element {
+      static get is() {
+        return 'pwa-users'
+      }
+    }
+
+    window.customElements.define(PWAUsers.is, PWAUsers);
+  </script>
+</dom-module>

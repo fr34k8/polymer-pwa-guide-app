@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
@@ -54,7 +55,7 @@
         margin-right: 18px;
       }
     </style>
-    
+
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -64,23 +65,25 @@
 
     <!-- drawer -->
     <app-drawer id="drawer" opened="{{drawerOpened}}" swipe-open tabindex="0">
-      <app-toolbar>
-        <a name="greeting" href="/greeting">
-          <paper-button><iron-icon icon="check"></iron-icon>Greeting</paper-button>
-        </a>
-      </app-toolbar>
+      <a name="greeting" href="/greeting">
+        <paper-button><iron-icon icon="check"></iron-icon>Greeting</paper-button>
+      </a>
+      <a name="users" href="/users">
+        <paper-button><iron-icon icon="social:people"></iron-icon>Users</paper-button>
+      </a>
     </app-drawer>
 
     <!-- header -->
-    <app-header role="navigation" id="header"s>
+    <app-header role="navigation" id="header">
       <app-toolbar>
         <paper-icon-button icon="menu" on-click="_toggleDrawer" aria-label="Menu"></paper-icon-button>
       </app-toolbar>
     </app-header>
 
     <!-- contents -->
-    <iron-pages selected="0">
-      <pwa-greeting/>
+    <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible">
+      <pwa-greeting name="greeting"></pwa-greeting>
+      <pwa-users name="users"></pwa-users>
     </iron-pages>
   </template>
 
@@ -105,11 +108,13 @@
           return;
         }
 
+        this.page = page || 'greeting';
+
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }
-        
-        const pageURL = this.resolveUrl(`pwa-${page || 'greeting'}.html`);
+
+        const pageURL = this.resolveUrl(`pwa-${this.page}.html`);
         Polymer.importHref(pageURL, null, null, true);
       }
     }
