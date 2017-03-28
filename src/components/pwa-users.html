@@ -1,20 +1,132 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="pwa-users">
   <template>
     <style>
       :host {
         display: block;
+        justify-content: center;
       }
+
+      ul {
+        list-style-type: none;
+        padding: 0px;
+      }
+
+      ul li {
+        padding: 10px 10px 0px 10px;
+      }
+
+      .user > a {
+        text-decoration: none;
+      }
+
+      a paper-card,
+      a:hover paper-card,
+      a:link paper-card,
+      a:active paper-card,
+      a:visited paper-card {
+        width: 100%;
+        color: #000;
+        text-transform: none;
+      }
+      
+      .card-content {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        padding: 10px;
+      }
+
+      .user-icon {
+        margin-right: 16px;
+      }
+
+      .user-info p {
+        margin: 0;
+        text-align: left;
+      }
+
+      .user-info p:nth-child(2) {
+        font-size: 12px;
+        color: grey;
+      }
+
+      iron-icon {
+        --iron-icon-width: 36px;
+        --iron-icon-height: 36px;
+        --iron-icon-fill-color: grey;
+      }
+
     </style>
 
-    <div>content</div>
+    <div>
+      <ul>
+        <template is="dom-repeat" items="{{users}}" as="user">
+          <li class="user">
+            <a href="">
+              <paper-card>
+                <div class="card-content">
+                  <div class="user-icon">
+                    <iron-icon icon="account-circle"></iron-icon>
+                  </div>
+                  <div class="user-info">
+                    <p>[[user.name]]</p>
+                    <p>[[user.email]]</p>
+                  </div>
+                </div>
+              </paper-card>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </div>
+
+    <!--apiKey: "AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
+    authDomain: "react-pwa-hello-world.firebaseapp.com",
+    databaseURL: "https://react-pwa-hello-world.firebaseio.com",
+    storageBucket: "react-pwa-hello-world.appspot.com",
+    messagingSenderId: "1075172756206"
+    -->
+    <firebase-app
+      api-key="AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
+      auth-domain="react-pwa-hello-world.firebaseapp.com",
+      database-url="https://react-pwa-hello-world.firebaseio.com">
+    </firebase-app>
+
+    <!--using query instead of document-->
+    <!--<firebase-document path="/users" data="{{usersData}}" log=true disabled=false></firebase-document>-->
+    <firebase-query id="query" path="/users" data="{{users}}" log=true></firebase-query>
   </template>
 
   <script>
     class PWAUsers extends Polymer.Element {
       static get is() {
         return 'pwa-users'
+      }
+
+      static get properties() {
+        return {
+          uid: String,
+          usersData: {
+            type: Object,
+            observer: '_usersDataChanged'
+          }
+        }
+      }
+
+      _usersDataChanged(newValue, oldValue) {
+        console.log('_usersDataChanged', newValue, oldValue, this.usersData);
+        // this.users = Object.keys(newValue).map(k => {
+        //   return newValue[k];
+        // });
+
+        console.log(this.users);
       }
     }
 
