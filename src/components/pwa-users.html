@@ -1,5 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
@@ -63,70 +67,113 @@
         --iron-icon-fill-color: grey;
       }
 
+      paper-fab {
+        position: fixed;
+	      bottom: 20px;
+	      right: 20px;
+        z-index: 9;
+      }
+
+      paper-fab {
+        --paper-fab-background: var(--paper-cyan-a700);
+        --paper-fab-keyboard-focus-background: var(--paper-cyan-a700);
+      }
+
+      paper-dialog {
+        width: 100%;
+        text-align: left;
+      }
+
+      paper-dialog .actions {
+        text-align: right;
+      }
+
+      paper-dialog .actions paper-button {
+        color: var(--paper-cyan-a700);
+        font-weight: 800;
+      }
     </style>
 
-    <div>
-      <ul>
-        <template is="dom-repeat" items="{{users}}" as="user">
-          <li class="user">
-            <a href="">
-              <paper-card>
-                <div class="card-content">
-                  <div class="user-icon">
-                    <iron-icon icon="account-circle"></iron-icon>
-                  </div>
-                  <div class="user-info">
-                    <p>[[user.name]]</p>
-                    <p>[[user.email]]</p>
-                  </div>
-                </div>
-              </paper-card>
-            </a>
-          </li>
-        </template>
-      </ul>
-    </div>
-
-    <!--apiKey: "AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
-    authDomain: "react-pwa-hello-world.firebaseapp.com",
-    databaseURL: "https://react-pwa-hello-world.firebaseio.com",
-    storageBucket: "react-pwa-hello-world.appspot.com",
-    messagingSenderId: "1075172756206"
-    -->
+    <!-- firebase config -->
     <firebase-app
       api-key="AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
       auth-domain="react-pwa-hello-world.firebaseapp.com",
       database-url="https://react-pwa-hello-world.firebaseio.com">
     </firebase-app>
 
-    <!--using query instead of document-->
-    <!--<firebase-document path="/users" data="{{usersData}}" log=true disabled=false></firebase-document>-->
-    <firebase-query id="query" path="/users" data="{{users}}" log=true></firebase-query>
+    <!-- firebase query -->
+    <firebase-document id="query" path="/users" data="{{users}}"></firebase-document>
+
+    <!-- users list -->
+    <ul>
+      <template is="dom-repeat" items="{{_toItems(users)}}" as="user">
+        <li class="user">
+          <a href="">
+            <paper-card>
+              <div class="card-content">
+                <div class="user-icon">
+                  <iron-icon icon="account-circle"></iron-icon>
+                </div>
+                <div class="user-info">
+                  <p>[[user.name]]</p>
+                  <p>[[user.email]]</p>
+                </div>
+              </div>
+            </paper-card>
+          </a>
+        </li>
+      </template>
+    </ul>
+
+    <!-- user adding -->
+    <paper-dialog id="dialog" with-backdrop>
+      <h2>Adding New User</h2>
+      <div>
+        Input your name and email address.
+        <paper-input placeholder="Name" value="{{user.name}}"></paper-input>
+        <paper-input placeholder="Email" value="{{user.email}}"></paper-input>
+      </div>
+      <div class="actions">
+        <paper-button on-tap="submit">Submit</paper-button>
+      </div>
+    </paper-dialog>
+    <paper-fab icon="add" on-tap="open"></paper-fab>
   </template>
 
   <script>
     class PWAUsers extends Polymer.Element {
       static get is() {
-        return 'pwa-users'
+        return 'pwa-users';
       }
 
-      static get properties() {
-        return {
-          uid: String,
-          usersData: {
-            type: Object,
-            observer: '_usersDataChanged'
-          }
+      constructor() {
+        super();
+
+        this.reset();
+      }
+
+      _toItems(data) {
+        return Object.keys(data).map(key => data[key]);
+      }
+
+      reset() {
+        this.user = {
+          name: '',
+          email:''
+        };
+      }
+
+      submit() {
+        if (this.user.name && this.user.email) {
+          firebase.app().database().ref('users').push(this.user).then((snapshot) => {
+            this.reset();
+            this.$.dialog.close();
+          })
         }
       }
 
-      _usersDataChanged(newValue, oldValue) {
-        console.log('_usersDataChanged', newValue, oldValue, this.usersData);
-        // this.users = Object.keys(newValue).map(k => {
-        //   return newValue[k];
-        // });
-
-        console.log(this.users);
+      open() {
+        this.$.dialog.open()
       }
     }
 
