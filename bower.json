@@ -20,6 +20,9 @@
     "paper-dialog": "polymerelements/paper-dialog#2.0-preview",
     "paper-input": "polymerelements/paper-input#2.0-preview"
   },
+  "resolutions": {
+    "polymer": "^2.0.0-rc.2"
+  },
   "devDependencies": {
     "web-component-tester": "^6.0.0-prerelease.6"
   }
