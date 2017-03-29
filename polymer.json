@@ -1,4 +1,18 @@
 {
+  "name": "bud",
+  "entrypoint": "index.html",
+  "shell": "src/components/pwa-app.html",
+  "fragments": [
+    "src/components/pwa-greeting.html",
+    "src/components/pwa-users.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
+  ],
   "lint": {
     "rules": [
       "polymer-2"

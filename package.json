@@ -4,6 +4,8 @@
   "author": "ragingwind",
   "license": "MIT",
   "scripts": {
+    "build": "polymer build --bundle --html-minify --js-compile --js-minify -css-minify",
+    "build:debug": "polymer build",
     "start": "polymer serve -o -p 5050"
   }
 }
