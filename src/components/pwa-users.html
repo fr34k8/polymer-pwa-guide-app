@@ -1,5 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
@@ -7,7 +6,7 @@
 <link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./pwa-user.html">
 
 <dom-module id="pwa-users">
   <template>
@@ -30,41 +29,14 @@
         text-decoration: none;
       }
 
-      a paper-card,
-      a:hover paper-card,
-      a:link paper-card,
-      a:active paper-card,
-      a:visited paper-card {
+      a pwa-user,
+      a:hover pwa-user,
+      a:link pwa-user,
+      a:active pwa-user,
+      a:visited pwa-user {
         width: 100%;
         color: #000;
         text-transform: none;
-      }
-      
-      .card-content {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        padding: 10px;
-      }
-
-      .user-icon {
-        margin-right: 16px;
-      }
-
-      .user-info p {
-        margin: 0;
-        text-align: left;
-      }
-
-      .user-info p:nth-child(2) {
-        font-size: 12px;
-        color: grey;
-      }
-
-      iron-icon {
-        --iron-icon-width: 36px;
-        --iron-icon-height: 36px;
-        --iron-icon-fill-color: grey;
       }
 
       paper-fab {
@@ -109,17 +81,7 @@
       <template is="dom-repeat" items="{{_toItems(users)}}" as="user">
         <li class="user">
           <a href="">
-            <paper-card>
-              <div class="card-content">
-                <div class="user-icon">
-                  <iron-icon icon="account-circle"></iron-icon>
-                </div>
-                <div class="user-info">
-                  <p>[[user.name]]</p>
-                  <p>[[user.email]]</p>
-                </div>
-              </div>
-            </paper-card>
+            <pwa-user user-name="[[user.name]]" user-email="[[user.email]]"></pwa-user>
           </a>
         </li>
       </template>
