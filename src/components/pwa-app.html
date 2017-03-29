@@ -57,11 +57,7 @@
     </style>
 
     <app-location route="{{route}}"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}">
-    </app-route>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <!-- drawer -->
     <app-drawer id="drawer" opened="{{drawerOpened}}" swipe-open tabindex="0">
@@ -83,7 +79,7 @@
     <!-- contents -->
     <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible">
       <pwa-greeting name="greeting"></pwa-greeting>
-      <pwa-users name="users"></pwa-users>
+      <pwa-users name="users" route="[[subroute]]"></pwa-users>
     </iron-pages>
   </template>
 

@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
@@ -66,6 +67,8 @@
       }
     </style>
 
+    <app-route route="[[route]]" pattern="/:key" data="{{routeData}}"></app-route>
+
     <!-- firebase config -->
     <firebase-app
       api-key="AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
@@ -74,13 +77,13 @@
     </firebase-app>
 
     <!-- firebase query -->
-    <firebase-document id="query" path="/users" data="{{users}}"></firebase-document>
+    <firebase-document id="query" path="/users" data="{{data}}"></firebase-document>
 
     <!-- users list -->
     <ul>
-      <template is="dom-repeat" items="{{_toItems(users)}}" as="user">
+      <template is="dom-repeat" items="[[userItems]]" as="user">
         <li class="user">
-          <a href="">
+          <a href="/users/[[user.key]]">
             <pwa-user user-name="[[user.name]]" user-email="[[user.email]]"></pwa-user>
           </a>
         </li>
@@ -107,30 +110,60 @@
       static get is() {
         return 'pwa-users';
       }
-
+      
       constructor() {
         super();
-
+        
         this.reset();
       }
 
+      static get observers() {
+        return [
+          '_pageChanged(routeData.key)',
+          '_dataChanged(data.*)'
+        ];
+      }
+
+      _pageChanged(key) {
+        this.set('key', key);
+        
+        if (this.data) {
+          this._updateUserItems(key);
+        }
+      }
+
+      _dataChanged() {
+        this._updateUserItems();
+      }
+
+      _updateUserItems() {
+        if (this.key) {
+          this.set('userItems', [this.data[this.key]]);
+        } else {
+          this.set('userItems', this._toItems(this.data));
+        }
+      }
+
       _toItems(data) {
-        return Object.keys(data).map(key => data[key]);
+        return Object.keys(data).map(key => {
+          data[key].key = key;
+          return data[key];
+        });
       }
 
       reset() {
-        this.user = {
-          name: '',
-          email:''
-        };
+        this.user = {};
       }
 
       submit() {
+        // @todo using validating
         if (this.user.name && this.user.email) {
-          firebase.app().database().ref('users').push(this.user).then((snapshot) => {
-            this.reset();
-            this.$.dialog.close();
-          })
+          firebase.app().database().ref('users')
+            .push(this.user)
+            .then(() => {
+              this.reset();
+              this.$.dialog.close();
+            });
         }
       }
 
