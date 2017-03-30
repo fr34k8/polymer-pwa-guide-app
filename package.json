@@ -6,6 +6,7 @@
   "scripts": {
     "build": "polymer build --add-service-worker",
     "build:bundle": "polymer build --bundle --add-service-worker --html-minify --js-compile --js-minify -css-minify",
-    "start": "polymer serve -o -p 5050"
+    "start": "polymer serve -p 5050",
+    "start:build": "polymer serve build/default -p 5050"
   }
 }
