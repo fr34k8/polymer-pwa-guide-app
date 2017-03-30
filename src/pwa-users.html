@@ -129,7 +129,7 @@
         this._updateUserItems();
       }
 
-      _dataChanged(data) {
+      _dataChanged() {
         this.set('dataArray', Object.keys(this.data).map(key => {
             this.data[key].key = key;
             return Object.assign({}, this.data[key]);
