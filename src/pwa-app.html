@@ -76,6 +76,9 @@
       <a name="users" href="/users">
         <paper-button><iron-icon icon="social:people"></iron-icon>Users</paper-button>
       </a>
+      <a name="notification" href="/notification">
+        <paper-button><iron-icon icon="social:people"></iron-icon>Notification</paper-button>
+      </a>
     </app-drawer>
 
     <!-- header -->
@@ -89,6 +92,7 @@
     <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible">
       <pwa-greeting name="greeting"></pwa-greeting>
       <pwa-users name="users" route="[[subroute]]"></pwa-users>
+      <pwa-notification name="notification" route="[[subroute]]"></pwa-users>
     </iron-pages>
   </template>
 

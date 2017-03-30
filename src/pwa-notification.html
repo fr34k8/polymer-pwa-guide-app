@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="./pwa-user.html">
+
+<dom-module id="pwa-notification">
+  <template>
+    <style>
+      :host {
+        display: block;
+        text-align: left;
+        margin: 10px;
+      }
+      
+      .card-contents {
+        margin: 10px;
+        padding-bottom: 10px;
+        font-size: 14px;
+      }
+      
+      .label {
+        color: gray
+      }
+    </style>
+
+    <!-- firebase messaging -->
+    <firebase-messaging
+      id="messaging"
+      on-message="_onFcmMessage"
+      token="{{token}}">
+    </firebase-messaging>
+
+    <!-- content -->
+    <paper-card>
+      <div class="card-contents">
+        <h2>Messaging</h2>
+      <div>
+        <p class="label">Here is token for the browser</p>
+        <paper-input label="Token" value="{{token}}" disabled></paper-input>
+      </div>
+      </div>
+    </paper-card>
+    <paper-toast id="toast" text="[[message]]"></paper-toast>
+  </template>
+
+  <script>
+    class PWANotification extends Polymer.Element {
+      static get is() {
+        return 'pwa-notification'
+      }
+
+      ready() {
+        super.ready();
+
+        this.$.messaging.requestPermission().catch(err => {
+          console.error(err);
+        });
+      }
+
+      _onFcmMessage(e, data) {
+        const noti = data.message.notification;
+        this.message = `${noti.title} ${noti.body}`;
+        this.$.toast.open();
+      }
+    }
+
+    window.customElements.define(PWANotification.is, PWANotification);
+  </script>
+</dom-module>
