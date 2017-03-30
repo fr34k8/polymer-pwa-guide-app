@@ -99,10 +99,10 @@
         <paper-input placeholder="Email" value="{{user.email}}"></paper-input>
       </div>
       <div class="actions">
-        <paper-button on-tap="submit">Submit</paper-button>
+        <paper-button on-tap="_submit">Submit</paper-button>
       </div>
     </paper-dialog>
-    <paper-fab icon="add" on-tap="open"></paper-fab>
+    <paper-fab icon="add" on-tap="_openDialog"></paper-fab>
   </template>
 
   <script>
@@ -113,8 +113,7 @@
       
       constructor() {
         super();
-        
-        this.reset();
+        this._reset();
       }
 
       static get observers() {
@@ -151,23 +150,23 @@
         });
       }
 
-      reset() {
+      _reset() {
         this.user = {};
       }
 
-      submit() {
+      _submit() {
         // @todo using validating
         if (this.user.name && this.user.email) {
           firebase.app().database().ref('users')
             .push(this.user)
             .then(() => {
-              this.reset();
+              this._reset();
               this.$.dialog.close();
             });
         }
       }
 
-      open() {
+      _openDialog() {
         this.$.dialog.open()
       }
     }
