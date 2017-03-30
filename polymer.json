@@ -15,7 +15,8 @@
   "extraDependencies": [
     "manifest.json",
     "favicon.ico",
-    "bower_components/webcomponentsjs/webcomponents-lite.js"
+    "bower_components/webcomponentsjs/webcomponents-lite.js",
+    "firebase-messaging-sw.js"
   ],
   "lint": {
     "rules": [
