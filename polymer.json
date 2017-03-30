@@ -5,7 +5,8 @@
   "fragments": [
     "src/pwa-greeting.html",
     "src/pwa-users.html",
-    "src/pwa-user.html"
+    "src/pwa-user.html",
+    "src/pwa-notification.html"
   ],
   "sources": [
     "src/**/*",
