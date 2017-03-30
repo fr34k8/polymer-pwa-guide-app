@@ -5,8 +5,6 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="./pwa-user.html">
 
 <dom-module id="pwa-users">
@@ -69,13 +67,6 @@
 
     <!-- route for users -->
     <app-route route="{{route}}"></app-route>
-
-    <!-- firebase config -->
-    <firebase-app
-      api-key="AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
-      auth-domain="react-pwa-hello-world.firebaseapp.com",
-      database-url="https://react-pwa-hello-world.firebaseio.com">
-    </firebase-app>
 
     <!-- firebase query -->
     <firebase-query id="query" path="/users" data="{{data}}"></firebase-query>
