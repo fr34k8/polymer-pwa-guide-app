@@ -1,11 +1,11 @@
 {
   "name": "bud",
   "entrypoint": "index.html",
-  "shell": "src/components/pwa-app.html",
+  "shell": "src/pwa-app.html",
   "fragments": [
-    "src/components/pwa-greeting.html",
-    "src/components/pwa-users.html",
-    "src/components/pwa-user.html"
+    "src/pwa-greeting.html",
+    "src/pwa-users.html",
+    "src/pwa-user.html"
   ],
   "sources": [
     "src/**/*",
