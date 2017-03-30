@@ -78,13 +78,13 @@
     </firebase-app>
 
     <!-- firebase query -->
-    <firebase-document id="query" path="/users" data="{{data}}"></firebase-document>
+    <firebase-query id="query" path="/users" data="{{data}}"></firebase-query>
 
     <!-- users list -->
     <ul>
-      <template is="dom-repeat" items="[[userItems]]" as="user">
+      <template id="users" is="dom-repeat" items="[[data]]" as="user" filter="_isSelectedUser">
         <li class="user">
-          <a href="/users/[[user.key]]">
+          <a href="/users/[[user.$key]]">
             <pwa-user user-name="[[user.name]]" user-email="[[user.email]]"></pwa-user>
           </a>
         </li>
@@ -119,34 +119,28 @@
 
       static get observers() {
         return [
-          '_routeChanged(route)',
-          '_dataChanged(data.*)'
+          '_routeChanged(route)'
         ];
       }
 
       _routeChanged(route) {
         this.set('selectedUser', route.path.length > 0 ? route.path.substring(1) : null);
-        this._updateUserItems();
+        this.$.users.render();
       }
 
-      _dataChanged() {
-        this.set('dataArray', Object.keys(this.data).map(key => {
-            this.data[key].key = key;
-            return Object.assign({}, this.data[key]);
-        }));
-        this._updateUserItems();
-      }
+      _isSelectedUser(user) {
+        if (this.selectedUser) {
+          return user.$key === this.selectedUser;
+        }
 
-      _updateUserItems() {
-        this.set('userItems', this.selectedUser ? [this.data[this.selectedUser]] : this.dataArray);
+        return true;
       }
-
+      
       _reset() {
         this.user = {};
       }
 
       _submit() {
-        // @todo using validating
         if (this.user.name && this.user.email) {
           firebase.app().database().ref('users')
             .push(this.user)
