@@ -67,7 +67,7 @@
       }
     </style>
 
-    <app-route route="[[route]]" pattern="/:key" data="{{routeData}}"></app-route>
+    <app-route route="{{route}}"></app-route>
 
     <!-- firebase config -->
     <firebase-app
@@ -118,36 +118,26 @@
 
       static get observers() {
         return [
-          '_pageChanged(routeData.key)',
+          '_routeChanged(route)',
           '_dataChanged(data.*)'
         ];
       }
 
-      _pageChanged(key) {
-        this.set('key', key);
-        
-        if (this.data) {
-          this._updateUserItems(key);
-        }
+      _routeChanged(route) {
+        this.set('selectedUser', route.path.length > 0 ? route.path.substring(1) : null);
+        this._updateUserItems();
       }
 
-      _dataChanged() {
+      _dataChanged(data) {
+        this.set('dataArray', Object.keys(this.data).map(key => {
+            this.data[key].key = key;
+            return Object.assign({}, this.data[key]);
+        }));
         this._updateUserItems();
       }
 
       _updateUserItems() {
-        if (this.key) {
-          this.set('userItems', [this.data[this.key]]);
-        } else {
-          this.set('userItems', this._toItems(this.data));
-        }
-      }
-
-      _toItems(data) {
-        return Object.keys(data).map(key => {
-          data[key].key = key;
-          return data[key];
-        });
+        this.set('userItems', this.selectedUser ? [this.data[this.selectedUser]] : this.dataArray);
       }
 
       _reset() {
