@@ -10,6 +10,7 @@
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 
 <dom-module id="pwa-app">
   <template>
@@ -58,6 +59,14 @@
 
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <!-- firebase app -->
+    <firebase-app
+      api-key="AIzaSyBfdmWiLAgIPCN-LADPTQtqD54TWdMzmZk",
+      auth-domain="react-pwa-hello-world.firebaseapp.com",
+      database-url="https://react-pwa-hello-world.firebaseio.com"
+      messaging-sender-id="1075172756206">
+    </firebase-app>
 
     <!-- drawer -->
     <app-drawer id="drawer" opened="{{drawerOpened}}" swipe-open tabindex="0">
