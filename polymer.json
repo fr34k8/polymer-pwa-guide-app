@@ -4,13 +4,16 @@
   "shell": "src/components/pwa-app.html",
   "fragments": [
     "src/components/pwa-greeting.html",
-    "src/components/pwa-users.html"
+    "src/components/pwa-users.html",
+    "src/components/pwa-user.html"
   ],
   "sources": [
     "src/**/*",
     "bower.json"
   ],
   "extraDependencies": [
+    "manifest.json",
+    "favicon.ico",
     "bower_components/webcomponentsjs/webcomponents-lite.js"
   ],
   "lint": {
