@@ -3,10 +3,6 @@
   "entrypoint": "index.html",
   "shell": "src/pwa-app.html",
   "fragments": [
-    "src/pwa-greeting.html",
-    "src/pwa-users.html",
-    "src/pwa-user.html",
-    "src/pwa-notification.html"
   ],
   "sources": [
     "src/**/*",
