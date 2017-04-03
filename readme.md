@@ -1,6 +1,6 @@
 # polymer-pwa-guide-kit
 
-*WARN, Current Polymer version is [rc2 and preview](https://www.polymer-project.org/blog/2017-03-08-2-0-rc). Have a look at bower.json. Please consider that this guide kit is under a restriction in cause of not released official version for Polymer 2 when you want to more do something with different version of Polymer. Data caching at local doesn't supported because of there are an issue related on [app-indexeddb-mirror](https://www.webcomponents.org/element/PolymerElements/app-storage/app-indexeddb-mirror) with polymerfire.
+*WARN, Current Polymer version is [rc2 and preview](https://www.polymer-project.org/blog/2017-03-08-2-0-rc). Have a look at bower.json. Please consider that this guide kit is under a restriction in cause of not released official version for Polymer 2 when you want to more do something with different version of Polymer.
 
 
 > This is a guide kit is designed to show how to make a Progressive Web App(PWA) and PWA features by brand new Polymer 2 with official [web components](https://www.webcomponents.org/author/PolymerElements). All of UI components and logic are developed in a way of Polymer (and Web Components). Also the project development process has attached to [Polymer CLI](https://www.polymer-project.org/2.0/docs/tools/polymer-cli) and [Firebase CLI](https://firebase.google.com/docs/cli/) which has been coordinated with yarn/npm scripts at package.json. We has been audition the project by [Lighthouse](https://github.com/GoogleChrome/lighthouse) to achive high-performed web application. Moreover, this guide kit is also backed by Firebase for hosting, realtime database, and also push notification.
@@ -17,7 +17,7 @@
 - **Web Push**: Web Push demo also is branded at this app by Firebase Push Messaging
 - **Service Worker**: Generating service worker scripts is completly intergrated in build process with [Polymer CLI](https://www.polymer-project.org/2.0/docs/tools/polymer-cli)
 - **Web Manifest**: Have a look how to installable webapp work by Web Manifest
-- **Realtime Database**: We featured firebase to show PWA how to work with fetched data and cached data via service worker
+- **Realtime Database**: We featured firebase to show PWA how to work with fetched data and cached data via service worker (*WARN* Data caching at local doesn't supported because of there are an issue related on [app-indexeddb-mirror](https://www.webcomponents.org/element/PolymerElements/app-storage/app-indexeddb-mirror) with polymerfire)
 
 # Getting Started
 
